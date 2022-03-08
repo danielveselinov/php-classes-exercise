@@ -126,13 +126,7 @@ abstract class User implements UserInfo {
         return "first name: {$this->getFirstName()}, last name {$this->getLastName()}, username {$this->getUsername()}, role {$this->getRole()}";
     }
 
-    public function login() 
-    {
+    public function login() {}
 
-    }
-
-    public function logout()
-    {
-        
-    }
+    public function logout() {}
 }
