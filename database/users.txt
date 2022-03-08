@@ -1,1 +1,2 @@
 gospodinot:root
+administrator:admin
