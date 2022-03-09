@@ -9,7 +9,7 @@ class Member extends User {
     public function __construct($fistName, $lastName, $username, $password, $role)
     {
         $this->posts = [];
-        $this->authenticated = "false";
+        $this->authenticated = false;
 
         parent::__construct($fistName, $lastName, $username, $password, $role);
     }
@@ -21,17 +21,17 @@ class Member extends User {
 
         foreach ($members as $member) {
             if ($member == "{$this->getUsername()}:{$this->getPassword()}") {
-                $this->authenticated = "true";
+                $this->authenticated = true;
                 break;
             } else {
-                return $this->authenticated = "false";
+                return $this->authenticated = false;
                 break;
             }   
         }
     }
 
     public function logout() {
-        $this->authenticated = "false";
+        $this->authenticated = false;
     }
 
     public function isLoggedIn() {

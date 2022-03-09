@@ -10,7 +10,7 @@ abstract class Post {
 
     public function __construct()
     {
-        $this->createdTime = date("Y-m-d H:i:s");
+        $this->setCreatedTime(date("Y-m-d H:i:s"));
     }
 
     /**
@@ -69,6 +69,26 @@ abstract class Post {
     public function setText($text)
     {
         $this->text = $text;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of createdTime
+     */ 
+    public function getCreatedTime()
+    {
+        return $this->createdTime;
+    }
+
+    /**
+     * Set the value of createdTime
+     *
+     * @return  self
+     */ 
+    public function setCreatedTime($createdTime)
+    {
+        $this->createdTime = $createdTime;
 
         return $this;
     }
