@@ -22,8 +22,10 @@ class Member extends User {
         foreach ($members as $member) {
             if ($member == "{$this->getUsername()}:{$this->getPassword()}") {
                 $this->authenticated = "true";
+                break;
             } else {
                 return $this->authenticated = "false";
+                break;
             }   
         }
     }
