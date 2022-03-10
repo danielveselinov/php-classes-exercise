@@ -23,10 +23,7 @@ class Member extends User {
             if ($member == "{$this->getUsername()}:{$this->getPassword()}") {
                 $this->authenticated = true;
                 break;
-            } else {
-                return $this->authenticated = false;
-                break;
-            }   
+            } 
         }
     }
 

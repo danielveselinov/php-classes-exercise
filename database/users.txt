@@ -1,2 +1,2 @@
-gospodinot:root
-administrator:admin
+root:admin
+john:doe123

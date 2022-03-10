@@ -2,7 +2,7 @@
 
 require_once __DIR__ . "/../Interfaces/TopicInfo.php";
 
-abstract class Post {
+class Post {
     private $createdTime;
     private $category;
     private $title;

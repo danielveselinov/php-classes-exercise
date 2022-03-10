@@ -1,9 +1,9 @@
 <?php 
 
-require_once __DIR__ . "/Post.php";
+require_once __DIR__ . "/../Interfaces/TopicInfo.php";
 require_once __DIR__ . "/Member.php";
 
-class Topic extends Post implements TopicInfo {
+class Topic implements TopicInfo {
     private $title;
     private $author; //object from member class
     private $category;
@@ -12,15 +12,14 @@ class Topic extends Post implements TopicInfo {
 
     public function __construct($title, $author, $category)
     {
-        $this->setTitle($title);
-        $this->setAuthor($author);
-        $this->setCategory($category);
-        $this->createdTime = date("Y-m-d H:i:s");
-        
         if (!$author->isLoggedIn() || $author->getRole() !== "admin") {
-            return "User: " . $author->identity() . ", is not able to create topic with title: {$this->getTitle()}";
+            echo "User: " . $author->identity() . ", is not able to create topic with title: <b>{$this->getTitle()}</b>";
         } else {
-            // echo "<br/> Creating...";
+            $this->setTitle($title);
+            $this->setAuthor($author);
+            $this->setCategory($category);
+            $this->createdTime = date("Y-m-d H:i:s");
+
             echo $this->printTopic();
         }
     }
@@ -46,7 +45,7 @@ class Topic extends Post implements TopicInfo {
     }
 
     public function printTopic() {
-        return "Topic: {$this->getTitle()}, created by: {$this->getAuthor()->identity()}, creation date: {$this->getCreatedTime()}";
+        return "Topic: <b>{$this->getTitle()}</b>, created by: {$this->getAuthor()->identity()}, creation date: {$this->getCreatedTime()}";
     }
 
     public function printPosts() {
@@ -94,34 +93,14 @@ class Topic extends Post implements TopicInfo {
         return $this;
     }
 
-    /**
-     * Get the value of posts
-     */ 
-    public function getPosts()
-    {
-        return $this->posts;
-    }
-
-    /**
-     * Set the value of posts
-     *
-     * @return  self
-     */ 
-    public function setPosts($posts)
-    {
-        $this->posts = $posts;
-
-        return $this;
-    }
-
     //Methods
-    public function addPost(Member $author, $post, $category) {
-
-        if (!$author->isLoggedIn() || $author->getRole() !== "member" || $this->getCategory() !== $category) {
-            echo "User: " . $author->identity() . ", is not able to add post with title: {$this->getTitle()}";
+    public function addPost(Member $author, $post) {
+        if (!$author->isLoggedIn() || $author->getRole() !== "member" || $this->getCategory() !== $post->getCategory()) {
+            echo "User: " . $author->identity() . ", is not able to add post with title: <b>{$this->getTitle()}</b>";
         } else {
             echo "<br/> Creating... member";
             // echo $this->printPosts();
+            array_push($this->posts, ["author" => $author, "posts" => $post]);
         }
     }
 
@@ -140,7 +119,7 @@ class Topic extends Post implements TopicInfo {
      */ 
     public function setCreatedTime($createdTime)
     {
-        $this->createdTime = parent::__construct($createdTime);
+        $this->createdTime = $createdTime;
 
         return $this;
     }
