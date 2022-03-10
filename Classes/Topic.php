@@ -45,12 +45,15 @@ class Topic implements TopicInfo {
     }
 
     public function printTopic() {
-        return "Topic: <b>{$this->getTitle()}</b>, created by: {$this->getAuthor()->identity()}, creation date: {$this->getCreatedTime()}";
+        return "Topic: <b>{$this->getTitle()}</b>, created by: {$this->getAuthor()->identity()}, creation date: {$this->getCreatedTime()}<br/>";
     }
 
     public function printPosts() {
-        //Need to be done for posts but fetching the array posts = [];
-        // return "Post: {$this->getTitle()}, created by: {$this->getAuthor()->identity()}, date: {$this->getCreatedTime()}";
+        $result = "";
+        foreach ($this->posts as $post) {
+            $result = "Post: <b>{$post["posts"]->getTitle()}</b>, created by: {$post["author"]->identity()}, date: {$this->getCreatedTime()} <br/>";
+        }
+        return $result;
     }
 
     /**
@@ -94,13 +97,12 @@ class Topic implements TopicInfo {
     }
 
     //Methods
-    public function addPost(Member $author, $post) {
+    public function addPost(Member $author, object $post) {
         if (!$author->isLoggedIn() || $author->getRole() !== "member" || $this->getCategory() !== $post->getCategory()) {
             echo "User: " . $author->identity() . ", is not able to add post with title: <b>{$this->getTitle()}</b>";
         } else {
-            echo "<br/> Creating... member";
-            // echo $this->printPosts();
             array_push($this->posts, ["author" => $author, "posts" => $post]);
+            echo $this->printPosts();
         }
     }
 
